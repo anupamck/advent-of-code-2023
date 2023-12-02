@@ -1,12 +1,12 @@
 import os
 
 
-def get_first_number(characters):
-    return next((char for char in characters if char.isdigit()), None)
+def get_first_number(line):
+    return next((char for char in line if char.isdigit()), None)
 
 
-def get_last_number(characters):
-    return next((char for char in reversed(characters) if char.isdigit()), None)
+def get_last_number(line):
+    return next((char for char in reversed(line) if char.isdigit()), None)
 
 
 def get_calibration_values(input_text):
