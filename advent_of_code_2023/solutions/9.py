@@ -39,44 +39,22 @@ def transform(source, map):
     return result
 
 
+def transform_multiple(source, map_array, input):
+    for mapping in map_array:
+        map = get_map(mapping, input)
+        result = transform(source, map)
+        source = result
+    return result
+
+
 if __name__ == '__main__':
     input_file_path = os.path.join("advent_of_code_2023", "inputs", "9.txt")
     with open(input_file_path) as input_file:
         seeds = get_seeds(input_file.readline(0))
         input_file.seek(0)
-        print(seeds, "are seeds")
-        seed_to_soil_map = get_map('seed-to-soil', input_file.read())
-        input_file.seek(0)
-        soils = transform(seeds, seed_to_soil_map)
-        print(soils, "are soils")
-        soil_to_fertilizer_map = get_map(
-            'soil-to-fertilizer', input_file.read())
-        input_file.seek(0)
-        fertilizers = transform(soils, soil_to_fertilizer_map)
-        print(fertilizers, "are fertilizers")
-        fertilizer_to_water_map = get_map(
-            'fertilizer-to-water', input_file.read())
-        input_file.seek(0)
-        water = transform(fertilizers, fertilizer_to_water_map)
-        print(water, "is water")
-        water_to_light_map = get_map(
-            'water-to-light', input_file.read())
-        input_file.seek(0)
-        light = transform(water, water_to_light_map)
-        print(light, "is light")
-        light_to_temperature_map = get_map(
-            'light-to-temperature', input_file.read())
-        input_file.seek(0)
-        temperature = transform(light, light_to_temperature_map)
-        print(temperature, "is temperature")
-        temperature_to_humidity_map = get_map(
-            'temperature-to-humidity', input_file.read())
-        input_file.seek(0)
-        humidity = transform(temperature, temperature_to_humidity_map)
-        print(humidity, "is humidity")
-        humidity_to_location_map = get_map(
-            'humidity-to-location', input_file.read())
-        input_file.seek(0)
-        location = transform(humidity, humidity_to_location_map)
-        print(location, "is location")
+        map_array = ['seed-to-soil', 'soil-to-fertilizer',
+                     'fertilizer-to-water', 'water-to-light', 'light-to-temperature',
+                     'temperature-to-humidity', 'humidity-to-location']
+
+        location = transform_multiple(seeds, map_array, input_file.read())
         print(min(location), "is the nearest location")
