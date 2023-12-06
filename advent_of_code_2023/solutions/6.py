@@ -73,7 +73,6 @@ def find_number_start_index(line, index):
 
 
 def product_of_gear_ratios(gear_ratios):
-    return(reduce())
     return reduce(lambda x, y: x * y, gear_ratios)
 
 
