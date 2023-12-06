@@ -1,8 +1,9 @@
+from operator import mul
 from functools import reduce
 
 
 def product_of_win_possibilities(win_possibilities):
-    return reduce(lambda x, y: x * y, win_possibilities)
+    return reduce(mul, win_possibilities)
 
 
 if __name__ == '__main__':
@@ -21,11 +22,11 @@ if __name__ == '__main__':
 
     win_possibilities = []
 
-    for time, record in time_and_records.items():
-        for i in range(time + 1):
-            distance = (i) * (time - i)
+    for total_time, record in time_and_records.items():
+        for speed in range(total_time + 1):
+            distance = (speed) * (total_time - speed)
             if distance > record:
-                win_possibilities.append(time - 2 * i + 1)
+                win_possibilities.append(total_time - 2 * speed + 1)
                 break
 
     print(win_possibilities, "win_possibilities")
