@@ -2,20 +2,21 @@ import os
 import re
 
 
-def get_nearest_location(line, input):
-    seeds_string = re.search(
-        '(?<=seeds:)[\d ]+', line).group(0).strip()
-    seed_schema = [int(value) for value in seeds_string.split()]
+def find_nearest_location(seed_schema, increment):
     nearest_location = 9999999999
     for index, value in enumerate(seed_schema):
         if index % 2 == 0:
-            for seed in range(value, value + seed_schema[index + 1]):
+            for seed in range(value, value + seed_schema[index + 1], increment):
                 location = transform_multiple(seed, map_array, input)
                 if location < nearest_location:
                     nearest_location = location
                     nearest_seed = seed
-    print(nearest_seed, 'nearest_seed')
-    return nearest_location
+    if increment == 1:
+        return nearest_location
+    else:
+        new_seed_schema = [nearest_seed - increment, 2 * increment]
+        new_increment = int(increment / 10)
+        return find_nearest_location(new_seed_schema, new_increment)
 
 
 def get_map(map_type, input):
@@ -58,8 +59,17 @@ if __name__ == '__main__':
         input = input_file.read()
         input_file.seek(0)
         line = input_file.readline()
+        seeds_string = re.search(
+            '(?<=seeds:)[\d ]+', line).group(0).strip()
+        seed_schema = [int(value) for value in seeds_string.split()]
         map_array = ['seed-to-soil', 'soil-to-fertilizer',
                      'fertilizer-to-water', 'water-to-light', 'light-to-temperature',
                      'temperature-to-humidity', 'humidity-to-location']
-        nearest_location = get_nearest_location(line, input)
-        print(nearest_location, "is the nearest location")
+        nearest_location = find_nearest_location(seed_schema, 1000000)
+        print("The nearest location is", nearest_location)
+
+
+#               seeds      location
+# First value:  3107966111 53037249
+# Second value: 3107440111 52511249
+# Answer value: 3107439671 52510809
