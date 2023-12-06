@@ -1,29 +1,31 @@
 from functools import reduce
 
 
-def product_of_win_possibilities(win_possibilities):
-    return reduce(lambda x, y: x * y, win_possibilities)
+def increment_speed_till_record(initial_speed, total_time, record, increment):
+    for speed in range(initial_speed, total_time + 1, increment):
+        distance = (speed) * (total_time - speed)
+        if distance > record:
+            if increment == 1:
+                return speed
+            else:
+                return decrement_speed_till_record(speed, total_time, record, int(increment / 10))
+
+
+def decrement_speed_till_record(initial_speed, total_time, record, decrement):
+    for speed in range(initial_speed, 0, - 1 * decrement):
+        distance = (speed) * (total_time - speed)
+        if distance < record:
+            if decrement == 1:
+                return speed + 1  # 1 is added back here so that a winning speed is returned
+            else:
+                return increment_speed_till_record(speed, total_time, record, int(decrement / 10))
 
 
 if __name__ == '__main__':
-    time_and_records = {
-        44806572: 208158110501102
-    }
+    total_time = 44806572
+    record = 208158110501102
 
-    time_and_records_test = {
-        7: 9,
-        15: 40,
-        30: 200
-    }
-
-    win_possibilities = []
-
-    for time, record in time_and_records.items():
-        for i in range(time + 1):
-            distance = (i) * (time - i)
-            if distance > record:
-                win_possibilities.append(time - 2 * i + 1)
-                break
-
-    print(win_possibilities, "win_possibilities")
-    # print(product_of_win_possibilities(win_possibilities), "margin_of_error")
+    lowest_winning_speed = increment_speed_till_record(
+        0, total_time, record, 10000)
+    win_possibilities = total_time - 2 * lowest_winning_speed + 1
+    print(win_possibilities)

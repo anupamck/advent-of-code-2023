@@ -14,12 +14,6 @@ if __name__ == '__main__':
         72: 1102
     }
 
-    time_and_records_test = {
-        7: 9,
-        15: 40,
-        30: 200
-    }
-
     win_possibilities = []
 
     for total_time, record in time_and_records.items():
