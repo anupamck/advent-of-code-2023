@@ -69,16 +69,11 @@ def is_same_kind_hand_higher(hand1, hand2):
 
 def is_double_pair(hand):
     number_of_pairs = 0
-    j_is_present = False
     for card in set(hand):
         frequency = hand.count(card)
         if frequency == 2:
             number_of_pairs += 1
-        if card == 'J':
-            j_is_present = True
     if number_of_pairs == 2:
-        return True
-    if number_of_pairs and j_is_present:
         return True
     return False
 
