@@ -1,4 +1,4 @@
-from advent_of_code_2023.solutions.day14 import *
+from advent_of_code_2023.solutions.day7_2 import *
 
 
 def test_is_higher_second_order():
@@ -38,5 +38,5 @@ def test_is_treble_full_house():
 
 def test_is_double_pair():
     assert is_double_pair("AAKK2") == True
-    assert is_double_pair("7J112") == True
+    assert is_double_pair("7J112") == False
     assert is_double_pair("7J142") == False

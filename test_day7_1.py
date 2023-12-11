@@ -1,4 +1,4 @@
-from advent_of_code_2023.solutions.day13 import *
+from advent_of_code_2023.solutions.day7_1 import *
 
 
 def test_is_higher_second_order():
