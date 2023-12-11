@@ -1,14 +1,14 @@
-import re
 import os
-from functools import reduce
 
 
 def find_next_value(values):
-    next_value = values[-1]
-    while list(set(values)) != [0]:
-        values = list(map(lambda x, y: y - x, values[: -1], values[1:]))
-        next_value += values[-1]
-    return next_value
+    def find_next_value_cumulative(values, last_value):
+        if list(set(values)) == [0]:
+            return last_value
+        else:
+            new_value = list(map(lambda a, b: b - a, values[:-1], values[1:]))
+            return find_next_value_cumulative(new_value, last_value + new_value[-1])
+    return find_next_value_cumulative(values, values[-1])
 
 
 if __name__ == '__main__':
