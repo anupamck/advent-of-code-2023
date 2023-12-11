@@ -1,5 +1,6 @@
 import re
 import os
+from functools import reduce
 
 
 def count_steps_to_destination(map, directions, start_location):
@@ -21,11 +22,7 @@ def count_steps_to_destination(map, directions, start_location):
 
 
 def get_start_locations(map):
-    start_locations = []
-    for location in map:
-        if location.endswith('A'):
-            start_locations.append(location)
-    return start_locations
+    return list(filter(lambda location: location.endswith('A'), map))
 
 
 def find_lcm_two_numbers(number1, number2):
@@ -33,10 +30,7 @@ def find_lcm_two_numbers(number1, number2):
 
 
 def find_lcm(numbers):
-    lcm = 1
-    for number in numbers:
-        lcm = find_lcm_two_numbers(lcm, number)
-    return lcm
+    return reduce(lambda number1, number2: find_lcm_two_numbers(number1, number2), numbers)
 
 
 def find_gcd(number1, number2):
